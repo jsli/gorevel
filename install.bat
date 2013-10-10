@@ -1,8 +1,7 @@
+@echo off
+@echo install packages...
 
-echo 'install packages...'
-
-set CURDIR=`pwd`
-set OLDGOPATH=%$GOPATH%
+set OLDGOPATH=%GOPATH%
 set GOPATH=%cd%
 
 go get -u github.com/robfig/revel
@@ -14,4 +13,4 @@ go get -u github.com/disintegration/imaging
 
 set GOPATH=%OLDGOPATH%
 
-echo 'finished.'
+echo finished.
