@@ -1,23 +1,14 @@
 package controllers
 
 import (
+	"code.google.com/p/go-uuid/uuid"
+	"fmt"
 	"github.com/disintegration/imaging"
 	"github.com/robfig/revel"
 	"image"
 	"revelapp/app/models"
 	"revelapp/app/routes"
 	"strings"
-)
-
-var (
-	avatars = []string{
-		"gopher_teal.jpg",
-		"gopher_aqua.jpg",
-		"gopher_brown.jpg",
-		"gopher_strawberry_bg.jpg",
-		"gopher_strawberry.jpg",
-	}
-	defaultAvatar = avatars[0]
 )
 
 type User struct {
@@ -35,21 +26,28 @@ func (c *User) SignupPost(user models.User) revel.Result {
 		c.FlashParams()
 		return c.Redirect(routes.User.Signup())
 	}
+
 	user.Type = MemberGroup
 	user.Avatar = defaultAvatar
+	user.ValidateCode = strings.Replace(uuid.NewUUID().String(), "-", "", -1)
+
 	if !user.Save() {
 		c.Flash.Error("注册用户失败")
 		return c.Redirect(routes.User.Signup())
 	}
+
+	subject := "Revel社区"
+	content := `<a href="http://gorevel.cn/user/validate/` + user.ValidateCode + `">激活账号</a>`
+	go sendMail(subject, content, []string{user.Email})
+
+	c.Flash.Success(fmt.Sprintf("注册 %s 成功，请到您的邮箱 %s 激活账号！", user.Name, user.Email))
 
 	perm := new(models.Permissions)
 	perm.UserId = user.Id
 	perm.Perm = MemberGroup
 	perm.Save()
 
-	c.Session["user"] = user.Name
-
-	return c.Redirect(routes.App.Index())
+	return c.Redirect(routes.User.Signin())
 }
 
 func (c *User) Signin() revel.Result {
@@ -73,6 +71,13 @@ func (c *User) SigninPost(name, password string) revel.Result {
 		c.FlashParams()
 		c.Flash.Out["user"] = name
 		c.Flash.Error("用户名或密码错误")
+		return c.Redirect(routes.User.Signin())
+	}
+
+	if !user.IsActive {
+		c.Flash.Error(fmt.Sprintf("您的账号 %s 尚未激活，请到您的邮箱 %s 激活账号！", user.Name, user.Email))
+		c.Validation.Keep()
+		c.FlashParams()
 		return c.Redirect(routes.User.Signin())
 	}
 
@@ -141,4 +146,16 @@ func (c *User) EditPost(id int64, avatar string) revel.Result {
 	}
 
 	return c.Redirect(routes.User.Edit(id))
+}
+
+func (c *User) Validate(code string) revel.Result {
+	user := models.FindUserByCode(code)
+	if user.Id == 0 {
+		return c.NotFound("用户不存在")
+	}
+
+	user.IsActive = true
+	c.Session["user"] = user.Name
+
+	return c.Redirect(routes.User.Signin())
 }

@@ -3,16 +3,36 @@ package controllers
 import (
 	"code.google.com/p/go-uuid/uuid"
 	"fmt"
+	"github.com/robfig/config"
 	"github.com/robfig/revel"
 	"io"
+	"net/smtp"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
+type SmtpType struct {
+	username string
+	password string
+	host     string
+	address  string
+	from     string
+}
+
 var (
-	uploadPath string
+	avatars = []string{
+		"gopher_teal.jpg",
+		"gopher_aqua.jpg",
+		"gopher_brown.jpg",
+		"gopher_strawberry_bg.jpg",
+		"gopher_strawberry.jpg",
+	}
+	defaultAvatar = avatars[0]
+
+	uploadPath string = ""
 	imageExts  string = ".jpg.jpeg.png"
+	Smtp       SmtpType
 )
 
 func saveFile(r *revel.Request, formField string) string {
@@ -69,4 +89,32 @@ func checkFileExt(c *revel.Controller, fileExts, formField, message string) {
 		}
 		c.Validation.Errors = append(c.Validation.Errors, err)
 	}
+}
+
+func sendMail(subject, content string, tos []string) error {
+	message := `From: Revel社区
+To: ` + strings.Join(tos, ",") + `
+Subject: ` + subject + `
+Content-Type: text/html;charset=UTF-8
+
+` + content
+	if Smtp.username == "" {
+		path, _ := filepath.Abs("")
+		c, _ := config.ReadDefault(fmt.Sprintf("%s/src/revelapp/conf/my.conf", path))
+
+		Smtp.username, _ = c.String("smtp", "smtp.username")
+		Smtp.password, _ = c.String("smtp", "smtp.password")
+		Smtp.address, _ = c.String("smtp", "smtp.address")
+		Smtp.from, _ = c.String("smtp", "smtp.from")
+		Smtp.host, _ = c.String("smtp", "smtp.host")
+	}
+
+	auth := smtp.PlainAuth("", Smtp.username, Smtp.password, Smtp.host)
+	err := smtp.SendMail(Smtp.address, auth, Smtp.from, tos, []byte(message))
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	return nil
 }

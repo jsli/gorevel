@@ -21,6 +21,8 @@ type User struct {
 	Type            int         `qbs:"default:2"` //1管理员，2普通用户
 	Avatar          string      `qbs:"size:255"`
 	Permissions     map[int]int `qbs:"-"`
+	ValidateCode    string      `qbs:"size:255"`
+	IsActive        bool
 	Created         time.Time
 	Updated         time.Time
 }
@@ -149,6 +151,19 @@ func FindUserById(id int64) *User {
 
 	user := new(User)
 	err = q.WhereEqual("id", id).Find(user)
+
+	return user
+}
+
+func FindUserByCode(code string) *User {
+	q, err := qbs.GetQbs()
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer q.Close()
+
+	user := new(User)
+	err = q.WhereEqual("ValidateCode", code).Find(user)
 
 	return user
 }

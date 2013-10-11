@@ -21,7 +21,6 @@ _testmain.go
 
 *.exe
 
-
 #my ignore
 bin
 exe
@@ -30,3 +29,6 @@ src/github.com
 src/code.google.com
 *.log
 src/revelapp/public/upload
+test-results/
+tmp/
+routes/

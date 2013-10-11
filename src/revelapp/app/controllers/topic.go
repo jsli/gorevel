@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	// "fmt"
 	"github.com/robfig/revel"
 	"revelapp/app/models"
 	"revelapp/app/routes"

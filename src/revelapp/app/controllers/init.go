@@ -10,5 +10,5 @@ func init() {
 		uploadPath = fmt.Sprintf("%s/public/upload/", revel.BasePath)
 	})
 
-	revel.InterceptMethod((*Application).adding, revel.BEFORE)
+	revel.InterceptMethod((*Application).inject, revel.BEFORE)
 }

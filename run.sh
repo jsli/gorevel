@@ -8,4 +8,3 @@ export GOPATH="$CURDIR"
 bin/revel run revelapp
 
 export GOPATH="$OLDGOPATH"
-

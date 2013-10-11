@@ -12,7 +12,7 @@ type Application struct {
 	*revel.Controller
 }
 
-func (c *Application) adding() revel.Result {
+func (c *Application) inject() revel.Result {
 	c.RenderArgs["active"] = c.Name
 	user := c.connected()
 	if user != nil {
@@ -69,29 +69,5 @@ type App struct {
 }
 
 func (c *App) Index() revel.Result {
-	t1 := `{{set . "title" "Home"}}
-{{template "header.html" .}}
-
-<header class="hero-unit" style="background-color:#A9F16C">
-  <div class="container">
-	<div class="row">
-	  <div class="hero-text">
-		<h1>It works!</h1>
-		<p></p>
-	  </div>
-	</div>
-  </div>
-</header>
-
-<div class="container">
-  <div class="row">
-	<div class="span6">
-	  {{template "flash.html" .}}
-	</div>
-  </div>
-</div>
-
-{{template "footer.html" .}}`
-
-	return c.Render(t1)
+	return c.Render()
 }

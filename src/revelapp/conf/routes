@@ -13,6 +13,7 @@ POST    /signin                                 User.SigninPost
 GET     /signout                                User.Signout
 GET     /user/:id/profile                       User.Edit
 POST    /user/:id/profile                       User.EditPost
+GET     /user/validate/:code                    User.Validate
 
 GET     /admin                                  Admin.Index
 GET     /admin/users                            Admin.ListUser
