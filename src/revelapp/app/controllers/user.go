@@ -155,6 +155,8 @@ func (c *User) Validate(code string) revel.Result {
 	}
 
 	user.IsActive = true
+	user.Save()
+
 	c.Session["user"] = user.Name
 
 	return c.Redirect(routes.User.Signin())

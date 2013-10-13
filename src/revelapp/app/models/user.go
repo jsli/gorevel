@@ -163,7 +163,7 @@ func FindUserByCode(code string) *User {
 	defer q.Close()
 
 	user := new(User)
-	err = q.WhereEqual("ValidateCode", code).Find(user)
+	err = q.WhereEqual("validate_code", code).Find(user)
 
 	return user
 }
