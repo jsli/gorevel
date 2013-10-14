@@ -36,11 +36,11 @@ func (c *User) SignupPost(user models.User) revel.Result {
 		return c.Redirect(routes.User.Signup())
 	}
 
-	subject := "Revel社区"
-	content := `<a href="http://gorevel.cn/user/validate/` + user.ValidateCode + `">激活账号</a>`
+	subject := "激活账号"
+	content := `<h2><a href="http://gorevel.cn/user/validate/` + user.ValidateCode + `">激活账号</a></h2>`
 	go sendMail(subject, content, []string{user.Email})
 
-	c.Flash.Success(fmt.Sprintf("注册 %s 成功，请到您的邮箱 %s 激活账号！", user.Name, user.Email))
+	c.Flash.Success(fmt.Sprintf("%s 注册成功，请到您的邮箱 %s 激活账号！", user.Name, user.Email))
 
 	perm := new(models.Permissions)
 	perm.UserId = user.Id
@@ -151,13 +151,13 @@ func (c *User) EditPost(id int64, avatar string) revel.Result {
 func (c *User) Validate(code string) revel.Result {
 	user := models.FindUserByCode(code)
 	if user.Id == 0 {
-		return c.NotFound("用户不存在")
+		return c.NotFound("用户不存在或校验码错误")
 	}
 
 	user.IsActive = true
 	user.Save()
 
-	c.Session["user"] = user.Name
+	c.Flash.Success("校验成功，请登录！")
 
 	return c.Redirect(routes.User.Signin())
 }
