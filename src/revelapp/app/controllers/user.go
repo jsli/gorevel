@@ -99,7 +99,8 @@ func (c *User) Signout() revel.Result {
 	return c.Redirect(routes.App.Index())
 }
 
-func (c *User) Edit(id int64) revel.Result {
+func (c *User) Edit() revel.Result {
+	id := c.RenderArgs["user"].(*models.User).Id
 	user := models.FindUserById(id)
 	if user.Id == 0 {
 		return c.NotFound("用户不存在")
@@ -108,7 +109,8 @@ func (c *User) Edit(id int64) revel.Result {
 	return c.Render(user, avatars)
 }
 
-func (c *User) EditPost(id int64, avatar string) revel.Result {
+func (c *User) EditPost(avatar string) revel.Result {
+	id := c.RenderArgs["user"].(*models.User).Id
 	checkFileExt(c.Controller, imageExts, "picture", "Only image")
 	user := models.FindUserById(id)
 	if user.Id == 0 {
@@ -118,7 +120,7 @@ func (c *User) EditPost(id int64, avatar string) revel.Result {
 	if c.Validation.HasErrors() {
 		c.Validation.Keep()
 		c.FlashParams()
-		return c.Redirect(routes.User.Edit(id))
+		return c.Redirect(routes.User.Edit())
 	}
 
 	if ok, _ := getFileExt(c.Request, "picture"); ok {
@@ -145,7 +147,7 @@ func (c *User) EditPost(id int64, avatar string) revel.Result {
 		c.Flash.Error("保存信息失败")
 	}
 
-	return c.Redirect(routes.User.Edit(id))
+	return c.Redirect(routes.User.Edit())
 }
 
 func (c *User) Validate(code string) revel.Result {

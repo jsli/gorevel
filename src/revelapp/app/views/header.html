@@ -60,7 +60,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {{.user.Name}}<b class="caret"></b></a>
 					<ul class="dropdown-menu" style="max-width:10px;">
 						{{if .user.IsAdmin}}<li><a href="{{url "Admin.Index"}}"><i class="icon-cog"></i>后台管理</a></li>{{end}}
-						<li><a href="{{url "User.Edit" .user.Id}}"><i class="icon-edit"></i>个人信息</a></li>
+						<li><a href="{{url "User.Edit"}}"><i class="icon-edit"></i>个人信息</a></li>
 						<li><a href="{{url "User.Signout"}}"><i class="icon-off"></i>退出</a></li>
 					</ul>
 					</li>

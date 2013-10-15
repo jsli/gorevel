@@ -9,7 +9,7 @@
 		{{template "flash.html" .}}
 		{{$user := .user}}
 
-		<form action="{{url "User.Edit" .user.Id}}" method="post" enctype="multipart/form-data">
+		<form action="{{url "User.Edit"}}" method="post" enctype="multipart/form-data">
 			<ul class="nav nav-tabs">
 				<li class="active">
 					<a href="#">头像设置</a>
@@ -27,15 +27,14 @@
 			</ul>
 
 			{{with $field := field "picture" .}}
-			<div class="control-group">{{if $user.Avatar}}
-							<img class="img-rounded" src="{{$user.AvatarImgSrc}}">
-						{{end}}
+			<div class="control-group">
+				{{if $user.Avatar}}
+					<img class="img-rounded" src="{{$user.AvatarImgSrc}}">
+				{{end}}
 				<div class="controls">
 					<div class="uploader" id="uniform-fileInput">
 						<input name="{{$field.Name}}" class="input-file uniform_on" id="{{$field.Name}}" type="file">
-						
 					</div>
-					
 					<span class="text-error">{{$field.Error}}</span>
 				</div>
 			</div>
@@ -48,27 +47,6 @@
 				</div>
 			</div>
 		</form>
-<!-- 
-		<form action="{{url "User.Edit" .user.Id}}" method="post">
-			<hr>
-			<ul class="thumbnails">
-				{{range .avatars}}
-					<li>
-						<label>
-							<img class="img-rounded" src="/public/img/{{.}}">
-							<input style="margin-left: 16px;" type="radio" name="avatar" value="{{.}}"{{if $user.IsDefaultAvatar .}} checked{{end}}>
-						</label>
-					</li>
-				{{end}}
-			</ul>
-			<div class="control-group">
-				<div class="controls">
-					<button type="submit" class="btn">使用默认头像</button>
-				</div>
-			</div>
-		</form> -->
-
 	</div>
-
-</div> <!-- /container -->
+</div>
 {{template "footer.html" .}}

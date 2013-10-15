@@ -9,24 +9,23 @@
 		{{template "flash.html" .}}
 		<form action="{{url "User.SigninPost"}}" method="POST" class="form-horizontal">
 			{{with $field := field "name" .}}
-				<div class="control-group">
-					<label class="control-label" for="{{$field.Name}}">用户名</label>
-					<div class="controls">
-						<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" id="{{$field.Name}}" placeholder="用户名">
-						<span class="text-error">{{$field.Error}}</span>
-					</div>
-
+			<div class="control-group">
+				<label class="control-label" for="{{$field.Name}}">用户名</label>
+				<div class="controls">
+					<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" id="{{$field.Name}}" placeholder="用户名">
+					<span class="text-error">{{$field.Error}}</span>
 				</div>
+			</div>
 			{{end}}
 
 			{{with $field := field "password" .}}
-				<div class="control-group">
-					<label class="control-label" for="{{$field.Name}}">密码</label>
-					<div class="controls">
-						<input type="password" name="{{$field.Name}}" value="{{$field.Flash}}" id="{{$field.Name}}" placeholder="密码">
-						<span class="text-error">{{$field.Error}}</span>
-					</div>
+			<div class="control-group">
+				<label class="control-label" for="{{$field.Name}}">密码</label>
+				<div class="controls">
+					<input type="password" name="{{$field.Name}}" value="{{$field.Flash}}" id="{{$field.Name}}" placeholder="密码">
+					<span class="text-error">{{$field.Error}}</span>
 				</div>
+			</div>
 			{{end}}
 
 			<div class="control-group">
@@ -36,6 +35,5 @@
 			</div>
 		</form>
 	</div>
-
-</div> <!-- /container -->
+</div>
 {{template "footer.html" .}}

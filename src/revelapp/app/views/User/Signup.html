@@ -9,43 +9,43 @@
 		{{template "flash.html"}}
 		<form action="{{url "User.SignupPost"}}" method="POST" class="form-horizontal">
 			{{with $field := field "user.Name" .}}
-				<div class="control-group">
-					<label class="control-label" for="{{$field.Name}}">用户名</label>
-					<div class="controls">
-						<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" id="{{$field.Name}}" placeholder="用户名">
-						<span class="text-error">{{$field.Error}}</span>
-					</div>
+			<div class="control-group">
+				<label class="control-label" for="{{$field.Name}}">用户名</label>
+				<div class="controls">
+					<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" id="{{$field.Name}}" placeholder="用户名">
+					<span class="text-error">{{$field.Error}}</span>
 				</div>
+			</div>
 			{{end}}
 
 			{{with $field := field "user.Email" .}}
-				<div class="control-group">
-					<label class="control-label" for="{{$field.Name}}">Email</label>
-					<div class="controls">
-						<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" id="{{$field.Name}}" placeholder="Email">
-						<span class="text-error">{{$field.Error}}</span>
-					</div>
+			<div class="control-group">
+				<label class="control-label" for="{{$field.Name}}">Email</label>
+				<div class="controls">
+					<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" id="{{$field.Name}}" placeholder="Email">
+					<span class="text-error">{{$field.Error}}</span>
 				</div>
+			</div>
 			{{end}}
 
 			{{with $field := field "user.Password" .}}
-				<div class="control-group">
-					<label class="control-label" for="{{$field.Name}}">密码</label>
-					<div class="controls">
-						<input type="password" name="{{$field.Name}}" value="{{$field.Flash}}" id="{{$field.Name}}" placeholder="密码">
-						<span class="text-error">{{$field.Error}}</span>
-					</div>
+			<div class="control-group">
+				<label class="control-label" for="{{$field.Name}}">密码</label>
+				<div class="controls">
+					<input type="password" name="{{$field.Name}}" value="{{$field.Flash}}" id="{{$field.Name}}" placeholder="密码">
+					<span class="text-error">{{$field.Error}}</span>
 				</div>
+			</div>
 			{{end}}
 
 			{{with $field := field "user.ConfirmPassword" .}}
-				<div class="control-group">
-					<label class="control-label" for="{{$field.Name}}">确认密码</label>
-					<div class="controls">
-						<input type="password" name="{{$field.Name}}" value="{{$field.Flash}}" id="{{$field.Name}}" placeholder="确认密码">
-						<span class="text-error">{{$field.Error}}</span>
-					</div>
+			<div class="control-group">
+				<label class="control-label" for="{{$field.Name}}">确认密码</label>
+				<div class="controls">
+					<input type="password" name="{{$field.Name}}" value="{{$field.Flash}}" id="{{$field.Name}}" placeholder="确认密码">
+					<span class="text-error">{{$field.Error}}</span>
 				</div>
+			</div>
 			{{end}}
 
 			<div class="control-group">
@@ -56,5 +56,5 @@
 		</form>
 	</div>
 
-</div> <!-- /container -->
+</div>
 {{template "footer.html" .}}

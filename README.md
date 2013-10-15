@@ -1,11 +1,11 @@
 gorevel
 =======
 
-Go语言Revel框架学习，站点使用Revel框架、Qbs构建。
+Go语言Revel框架学习，本站使用Revel、Qbs构建。
 
-配置文件在 src/revelapp/conf 目录中，主配置app.conf，自定义配置my.conf (包括数据库配置、邮件发送配置)。
+配置文件在 src/revelapp/conf 目录中，主配置app.conf，自定义配置my.conf (数据库、邮件)。
 
-默认的数据库是mysql，数据库名gorevel，表结构不需要创建，由程序运行时自动创建。
+默认的数据库是mysql，数据库名gorevel，表结构不需要创建，程序启动时由Qbs自动创建。
 
 ###Requirements
 
@@ -14,8 +14,8 @@ Go语言Revel框架学习，站点使用Revel框架、Qbs构建。
 - github.com/robfig/revel/revel
 - github.com/coocood/qbs
 - github.com/coocood/mysql
-- code.google.com/p/go-uuid/uuid
 - github.com/disintegration/imaging
+- code.google.com/p/go-uuid/uuid
 
 ###Install
 

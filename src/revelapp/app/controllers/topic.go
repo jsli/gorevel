@@ -53,7 +53,6 @@ func (c *Topic) Category(id int64, page int) revel.Result {
 
 func (c *Topic) New() revel.Result {
 	title := "发表新帖"
-
 	categories := models.GetCategories()
 
 	return c.Render(title, categories)
